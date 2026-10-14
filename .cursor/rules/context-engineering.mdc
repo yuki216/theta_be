@@ -1,0 +1,28 @@
+---
+description: Context Engineering and Clean Architecture Layering rules for Theta Backend
+globs: **/*
+alwaysApply: true
+---
+
+# Theta Backend Context Engineering & Clean Architecture MDC
+
+## Operating Principles
+- **SSOT**: `docs/` is the single source of truth for domain logic and requirements.
+- **Contract-Driven**: All API endpoints and payloads are strictly declared in `.context/02-SHARED-CONTRACTS/openapi-spec.yaml`.
+- **Clean Architecture (SALT Standard)**:
+  - `cmd/app` -> composition root & wiring
+  - `domain/` -> pure business logic (entities, repository interfaces, enums). No Gin or GORM imports.
+  - `application/usecase/<feature>/` -> orchestrator & table-driven unit tests.
+  - `delivery/http/<feature>handler/` -> Gin handlers & camelCase DTOs.
+  - `infrastructure/` -> PostgreSQL GORM & in-memory persistence adapters.
+  - `pkg/` -> reusable helpers (`config`, `errs`, `httpresponse`).
+
+## Non-Negotiable Invariants
+1. **JSON DTO Tagging**: All DTO fields in `delivery/` MUST use `json:"camelCase"`.
+2. **Deterministic Testing**: Inject `nowFunc func() time.Time` and `idGen func() string` into use cases to guarantee deterministic assertions.
+3. **Dual Persistence**: Provide both PostgreSQL GORM and thread-safe In-Memory repository adapters.
+4. **Mandatory Verification**: Every modification must pass:
+   ```bash
+   go test -v ./...
+   go build -v -o bin/app.exe ./cmd/app
+   ```

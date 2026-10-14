@@ -4,10 +4,21 @@ Production-ready Go backend boilerplate adhering to Context Engineering and Clea
 
 ---
 
-## 🏛️ Context Engineering Navigation
+## 🏛️ Context Engineering & AI Tool Support
 
+This repository is optimized for **guarded vibe coding** across multiple AI IDEs and agents:
+
+| AI Tool | Configuration & Rule Entrypoints | Status |
+| :--- | :--- | :--- |
+| **Cursor** | `.cursorrules` & `.cursor/rules/context-engineering.mdc` | Configured |
+| **Claude** (Claude Code / Desktop) | `CLAUDE.md` | Configured |
+| **OpenCode** | `AGENTS.md` & `.opencode/rules.md` | Configured |
+| **Trae** (ByteDance) | `.traerules` & `.trae/rules/project_rules.md` | Configured |
+
+### Context Engineering Hierarchy
 - **Central Hub**: `AGENTS.md`
 - **Context Router**: `CLAUDE.md`
+- **SSOT Documentation**: `docs/` (`01-system-overview.md` .. `05-feature-addition-workflow.md`)
 - **AI Operational Rules**: `.context/00-AI-PITFALLS-AND-RULES.md`
 - **Domain Overview**: `.context/01-PROJECT-CONTEXT.md`
 - **API Contracts**: `.context/02-SHARED-CONTRACTS/openapi-spec.yaml`
@@ -39,7 +50,7 @@ theta_be/
 │   ├── config/              <-- Configuration loader
 │   ├── errs/                <-- Sentinel & typed errors
 │   └── httpresponse/        <-- Standard response envelope helper
-└── .context/                <-- Progressive Disclosure Context Engineering
+└── docs/                    <-- SSOT Technical Specifications
 ```
 
 ---

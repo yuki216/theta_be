@@ -20,12 +20,17 @@ All project context and technical specifications are sourced from the `docs/` fo
 
 ## Clean Architecture Layers
 - `cmd/app` — composition root & wiring
-- `domain/` — pure entities, repository interfaces, enums
+- `domain/` — pure entities, repository interfaces, enums (no Gin or GORM imports)
 - `application/usecase/` — business orchestration & table-driven unit tests
-- `delivery/http/` — Gin handlers, DTOs, routing, middleware
+- `delivery/http/` — Gin handlers, DTOs (`json:"camelCase"`), routing, middleware
 - `infrastructure/` — GORM models, PostgreSQL connection, repository implementations
 - `pkg/` — config, errs, httpresponse
 
-Verification Commands:
-- `go test -v ./...`
-- `go build -v ./...`
+## Claude Code Execution Protocol
+When implementing features or refactoring:
+1. Review `docs/` and `.context/02-SHARED-CONTRACTS/` first.
+2. Follow TDD: write/update unit tests in `application/usecase/<feature>/` before finishing implementation.
+3. Verify every change with:
+   - `go test -v ./...`
+   - `go build -v -o bin/app.exe ./cmd/app`
+4. Never assume success without running verification commands.

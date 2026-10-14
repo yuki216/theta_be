@@ -1,0 +1,21 @@
+# Trae Rules for Theta Backend (theta_be)
+
+## System Overview
+- **Project**: Theta Backend (`theta_be`)
+- **Architecture**: Clean Architecture Layering (`cmd/domain/application/delivery/infrastructure/pkg`)
+- **SSOT**: Specifications reside in `docs/` and contracts reside in `.context/02-SHARED-CONTRACTS/`
+
+## Guidelines for AI Assistants
+1. **Never invent domain logic**: Consult `docs/` and `.context/01-PROJECT-CONTEXT.md` first.
+2. **Follow Layer Boundaries**:
+   - `domain/`: Pure Go entities and repository port interfaces. No GORM, Gin, or SQL imports.
+   - `application/`: Business orchestration. TDD tests required for every usecase.
+   - `delivery/`: HTTP Gin handlers and DTOs using strict `camelCase` JSON tagging.
+   - `infrastructure/`: Database connections, GORM models, and repository implementations.
+   - `pkg/`: Shared response envelopes (`pkg/httpresponse`), error codes (`pkg/errs`), and configuration (`pkg/config`).
+   - `cmd/app/`: Composition root (wiring and server lifecycle).
+3. **Verification Command**:
+   ```bash
+   go test -v ./...
+   go build -v -o bin/app.exe ./cmd/app
+   ```

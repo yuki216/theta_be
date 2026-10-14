@@ -1,0 +1,28 @@
+# Cursor Rules for Theta Backend (theta_be)
+
+You are an expert Go backend engineer building on the Theta Backend project.
+This project enforces **Context Engineering** and **Clean Architecture Layering (SALT pattern)**.
+
+## Mandatory Entry Point
+Before writing any code or answering architecture questions, you MUST read:
+1. `AGENTS.md` (Central Context Hub & Routing Table)
+2. `docs/` (Single Source of Truth for system requirements and domain rules)
+3. `.context/00-AI-PITFALLS-AND-RULES.md` (Strict anti-hallucination & anti-sycophancy rules)
+
+## Clean Architecture Layers
+- `cmd/app/main.go` — Composition root: wires dependency injection and server lifecycle.
+- `domain/` — Pure enterprise business rules (entities, port interfaces, enums). Zero external framework imports (NO Gin, NO GORM, NO SQL).
+- `application/usecase/<feature>/` — Application use cases and business orchestration. Must include table-driven unit tests.
+- `delivery/http/<feature>handler/` — HTTP Gin handlers, request binding, camelCase DTOs, and router registration.
+- `infrastructure/` — GORM PostgreSQL and In-Memory repository adapters.
+- `pkg/` — Cross-cutting utilities (`config`, `errs`, `httpresponse`).
+
+## Vibe Coding Protocol for Features
+When asked to build or modify a feature:
+1. **Contract First**: Update `.context/02-SHARED-CONTRACTS/openapi-spec.yaml` and `.context/backend/business-matrix.md`.
+2. **Domain Layer**: Define entity and repository port interface in `domain/`.
+3. **Application Layer (TDD)**: Write failing tests in `application/usecase/<feature>/<feature>_usecase_test.go` (RED), then implement the use case (GREEN).
+4. **Infrastructure Layer**: Implement GORM and in-memory repository adapters in `infrastructure/repository/`.
+5. **Delivery Layer**: Write camelCase DTOs and Gin handlers in `delivery/http/`.
+6. **Composition Root**: Wire dependencies in `cmd/app/main.go`.
+7. **Verification**: Always run `go test -v ./...` and `go build -v -o bin/app.exe ./cmd/app`. No task is complete without zero exit code.

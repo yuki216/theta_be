@@ -4,7 +4,7 @@
 > **Scope**: Backend Service Only (Go, Gin, GORM, PostgreSQL)  
 > **Architecture**: Clean Architecture Layering (SALT standard: `cmd/domain/application/delivery/infrastructure/pkg`)  
 > **Documentation SSOT**: `docs/` folder (Source of truth for all domain & system requirements)  
-> **Core Principle**: Single Source of Truth via Shared Contracts (`.context/02-SHARED-CONTRACTS/`)
+> **Supported AI Tools**: Cursor (`.cursorrules`, `.cursor/rules/`), Claude (`CLAUDE.md`), OpenCode (`.opencode/`, `AGENTS.md`), Trae (`.traerules`, `.trae/rules/`)
 
 ---
 
@@ -67,6 +67,17 @@ Execution Flow for Backend Tasks:
                      │  - go build -v ./...              │
                      └───────────────────────────────────┘
 ```
+
+---
+
+## 🛠️ Tool Integration Registry
+
+| Tool | Rule / Config File | Behavior |
+| :--- | :--- | :--- |
+| **Cursor** | `.cursorrules` & `.cursor/rules/context-engineering.mdc` | Automatically loads project guardrails, clean architecture constraints, and testing protocols. |
+| **Claude (Code / Desktop)** | `CLAUDE.md` | Provides deterministic routing, TDD protocols, and terminal verification instructions. |
+| **OpenCode** | `AGENTS.md` & `.opencode/rules.md` | Enforces open-agent spec standards and context-first development. |
+| **Trae (ByteDance)** | `.traerules` & `.trae/rules/project_rules.md` | Guides Trae agent to follow layer isolation and run verification checks. |
 
 ---
 
